@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'includes/header.html' %}
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+    {% include 'includes/nav.html' %}
+
+    <div class="container-fluid">
+      <div class="row">
+
+        {% include 'includes/nav-sidebar.html' %}
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">{% block header %}Dashboard{% endblock %}</h1>
+          <div class="breadcrumb">
+            {% block breadcrumb %}{% endblock %}
+          </div>
+
+          <div class="content">
+            {% block content %}{% endblock %}
+          </div>
+
+          {% include 'includes/pagination.html' %}
+          </div>
+
+        {% include 'includes/footer.html' %}
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "dashboard_files/jquery.js" %}"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{% static "dashboard_files/bootstrap.js" %}"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="{% static "dashboard_files/holder.js" %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static "dashboard_files/ie10-viewport-bug-workaround.js" %}"></script>
+    {% block scripts %}{% endblock %}
+    </body>
+</html>

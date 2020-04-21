@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block header %}
+    {{ block.super }} Users
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Users</li>
+{% endblock %}
+
+{% block styles %}
+    <style>
+    .ordering{
+        cursor: pointer;
+    }
+    .ordering:hover {
+        color: cadetblue;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" id="username_filter" placeholder="Username" aria-label="Username">
+    </div>
+
+    {% if object_list %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><span class="ordering" onclick="orderChange('a')">Username</span></th>
+                  <th><span class="ordering" onclick="">Name</span></th>
+                  <th><span class="ordering" onclick="">Active</span></th>
+                  <th><span class="ordering" onclick="orderChange('b')">Profile age</span></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for obj in object_list %}
+                <tr>
+                  <td><a href={{ obj.get_absolute_url }}>{{ obj.username }}</a><br></td>
+                  <td>{{ obj.get_full_name | title }}<br></td>
+                  <td>{{ obj.is_active }}<br></td>
+                  <td>{{ obj.date_joined | timesince }} ago<br></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    {% else %}
+        <p><strong>Wow, such empty.</strong></p>
+    {% endif %}
+
+    <p>
+    <form id="filter" hidden>
+        {{ filter.form }}
+        <button type="submit">Submit</button>
+    </form>
+    </p>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    var form = $('#filter');
+    var curr = {};
+    curr = '{{ ordering_a }}';
+    curr = (curr === 'None')?undefined:curr;
+
+    function orderChange(attr) {
+        curr = (curr === attr)?'-'+curr:attr;
+        if (curr.indexOf("--") >= 0) {
+            curr = curr.slice(2);
+        }
+        $('#id_ordering_a').val(curr);
+        form.submit();
+    }
+    var username = $("#username_filter");
+
+    username.on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            searchUsername()
+        }
+    });
+
+    {#    initialize the custom search field#}
+    username.val($('#id_username__icontains').val());
+    function searchUsername() {
+        var q = username.val();
+        $('#id_username__icontains').val(q);
+        form.submit();
+    }
+    </script>
+
+{% endblock %}

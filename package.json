@@ -1,0 +1,25 @@
+{
+  "name": "aayu",
+  "version": "1.0.0",
+  "description": "demo electron+django app ",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager .",
+    "package_windows": "electron-packager . --platform win32",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "demo"
+  ],
+  "author": "annshress",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.2.3",
+    "electron-packager": "^14.2.1",
+    "request-promise": "^4.2.5"
+  },
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
